@@ -24,7 +24,7 @@ class Tree
   end
 
   def insert(value)
-    where_to_insert = find_parent_node(@root, value)[:node]
+    where_to_insert = find(@root, value)[:node]
     if value > where_to_insert.data
       where_to_insert.right = Node.new(value)
     else
@@ -34,27 +34,27 @@ class Tree
     pretty_print(@root)
   end
 
-  def find_parent_node(node, value, parent = nil)
+  def find(node, value, parent = nil)
     if value == node.data
       # Do nothing
     elsif value < node.data
-      return find_parent_node(node.left, value, node) unless node.left.nil?
+      return find(node.left, value, node) unless node.left.nil?
     else
-      return find_parent_node(node.right, value, node) unless node.right.nil?
+      return find(node.right, value, node) unless node.right.nil?
     end
 
     { node: node, parent: parent }
   end
 
   def delete_alt(value, start_node = @root)
-    found = find_parent_node(start_node, value)
+    found = find(start_node, value)
     found_node = found[:node]
     found_parent = found[:parent]
 
     if found_node.left_child_exist? && found_node.right_child_exist?
       succ_node = succ(found_node.right)
 
-      succ_parent = find_parent_node(start_node, succ_node.data)[:parent]
+      succ_parent = find(start_node, succ_node.data)[:parent]
       succ_parent.left = succ_node.left || succ_node.right if succ_parent.left == succ_node
       succ_parent.right = succ_node.left || succ_node.right if succ_parent.right == succ_node
 
