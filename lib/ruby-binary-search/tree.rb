@@ -36,7 +36,7 @@ class Tree
 
   def find_parent_node(node, value, parent = nil)
     if value == node.data
-      #
+      # Do nothing
     elsif value < node.data
       return find_parent_node(node.left, value, node) unless node.left.nil?
     else
@@ -66,26 +66,22 @@ class Tree
         succ_parent.right = succ_node.left_child_exist? ? succ_node.left : succ_node.right
       end
     elsif found_node.left_child_exist?
-      p 'left child'
-      found_parent.left = found_node.left if found_parent.left_contains_value?(value)
-      found_parent.right = found_node.left if found_parent.right_contains_value?(value)
+      update_parent_node_leaf_conditionally(found_parent, found_node.left, value)
     elsif found_node.right_child_exist?
-      p 'right child'
-      found_parent.left = found_node.right if found_parent.left_contains_value?(value)
-      found_parent.right = found_node.right if found_parent.right_contains_value?(value)
+      update_parent_node_leaf_conditionally(found_parent, found_node.right, value)
     else
-      p 'no child'
-      found_parent.left = nil if found_parent.left_contains_value?(value)
-      found_parent.right = nil if found_parent.right_contains_value?(value)
+      update_parent_node_leaf_conditionally(found_parent, nil, value)
     end
     pretty_print(@root)
   end
 
-  def succ(node)
-    # puts "#{node.left} #{node.data}"
-    return succ(node.left) if node.left
+  def update_parent_node_leaf_conditionally(parent, new_value, value)
+    parent.left = new_value if parent.left_contains_value?(value)
+    parent.right = new_value if parent.right_contains_value?(value)
+  end
 
-    # return succ(node.right) if node.right
+  def succ(node)
+    return succ(node.left) if node.left
 
     node
   end
