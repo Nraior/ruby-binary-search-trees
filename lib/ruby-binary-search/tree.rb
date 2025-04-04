@@ -46,7 +46,7 @@ class Tree
     { node: node, parent: parent }
   end
 
-  def delete_alt(value, start_node = @root)
+  def delete(value, start_node = @root)
     found = find(start_node, value)
     found_node = found[:node]
     found_parent = found[:parent]

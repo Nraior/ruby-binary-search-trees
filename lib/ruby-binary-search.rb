@@ -8,5 +8,5 @@ tree = Tree.new(data)
 # tree.insert(16)
 # tree.insert(14)
 
-tree.delete_alt(67)
-tree.delete_alt(8)
+tree.delete(67)
+tree.delete(8)
