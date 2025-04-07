@@ -10,3 +10,5 @@ tree = Tree.new(data)
 
 tree.delete(67)
 tree.delete(8)
+
+tree.postorder { |test| p "Element: #{test}" }

@@ -85,4 +85,55 @@ class Tree
 
     node
   end
+
+  def level_order(&block)
+    return unless block_given?
+
+    queue = []
+    level_check(@root, queue, &block)
+  end
+
+  def level_check(node, queue, &block)
+    return if node.nil?
+
+    queue.push(node.left) unless node&.left.nil?
+    queue.push(node.right) unless node&.right.nil?
+
+    next_node = queue.shift
+
+    yield(node.data)
+
+    level_check(next_node, queue, &block)
+  end
+
+  def preorder(node = @root, &block)
+    return if node.nil? || !block_given?
+
+    yield(node.data)
+    preorder(node.left, &block)
+    preorder(node.right, &block)
+  end
+
+  def inorder(node = @root, &block)
+    return if node.nil? || !block_given?
+
+    inorder(node.left, &block)
+    yield(node.data)
+    inorder(node.right, &block)
+  end
+
+  def postorder(node = @root, &block)
+    return if node.nil? || !block_given?
+
+    postorder(node.left, &block)
+    postorder(node.right, &block)
+    yield(node.data)
+  end
+
+  def height(node, current_height = 0)
+    height = 0
+  end
+
+  def search_height
+  end
 end
