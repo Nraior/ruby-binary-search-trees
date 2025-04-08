@@ -43,6 +43,8 @@ class Tree
       return find(node.right, value, node) unless node.right.nil?
     end
 
+    return { node: nil, parent: nil } if node.data != value
+
     { node: node, parent: parent }
   end
 
@@ -130,10 +132,37 @@ class Tree
     yield(node.data)
   end
 
-  def height(node, current_height = 0)
-    height = 0
+  def height(value)
+    start_point = find(@root, value)[:node]
+    return 0 if start_point.nil?
+
+    height = search_height(value, start_point)
   end
 
-  def search_height
+  def search_height(value, current_node)
+    return 0 if current_node.nil?
+
+    left = 1 + search_height(value, current_node&.left)
+    right = 1 + search_height(value, current_node&.right)
+
+    [left, right].max
+  end
+
+  def depth(value)
+    depth = search_depth(@root, value)
+    p depth
+  end
+
+  def search_depth(node, value)
+    # p node.data unless node.nil?
+    return nil if node.nil?
+    return 1 if node.data == value
+
+    left =  search_depth(node.left, value)
+    right = search_depth(node.right, value)
+
+    left += 1 unless left.nil?
+    right += 1 unless right.nil?
+    [left, right].compact.max
   end
 end
