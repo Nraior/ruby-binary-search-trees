@@ -176,26 +176,23 @@ class Tree
   end
 
   def balanced_walk(node)
-    return 0 if node.nil?
-    return 0 if node.left.nil? && node.right.nil?
+    return 0 if node.nil? || node.left.nil? && node.right.nil?
+
+    l = balanced_walk(node.left)
+    r = balanced_walk(node.right)
 
     if node.right.nil?
-      total = 1 + balanced_walk(node.left)
-      return false if total >= 2
+      return false if 1 + l >= 2
 
-      return total
+      return 1 + l
 
     elsif node.left.nil?
-      total = 1 + balanced_walk(node.right)
-      return false if total >= 2
+      return false if 1 + r >= 2
 
-      return total
+      return 1 + r
 
-    else
-      l = balanced_walk(node.left)
-      r = balanced_walk(node.right)
-
-      return false if l == false || r == false
+    elsif l == false || r == false
+      return false
     end
     true
   end
