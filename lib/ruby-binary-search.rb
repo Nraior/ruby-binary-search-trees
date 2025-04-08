@@ -12,3 +12,11 @@ tree.delete(67)
 tree.delete(8)
 
 tree.depth(23)
+
+# tree.insert(8)
+tree.pretty_print
+
+# tree.insert(9)
+
+tree.pretty_print
+p tree.balanced?

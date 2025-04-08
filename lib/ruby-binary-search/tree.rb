@@ -5,7 +5,6 @@ class Tree
   def initialize(array)
     sorted_array = array.uniq.sort
     @root = build_tree(sorted_array, 0, sorted_array.length - 1)
-    pretty_print(@root)
   end
 
   def build_tree(array, start_index, end_index)
@@ -24,14 +23,21 @@ class Tree
   end
 
   def insert(value)
-    where_to_insert = find(@root, value)[:node]
+    where_to_insert = find_for_insert(@root, value)
     if value > where_to_insert.data
       where_to_insert.right = Node.new(value)
     else
       where_to_insert.left = Node.new(value)
     end
+  end
 
-    pretty_print(@root)
+  def find_for_insert(node, value)
+    if value < node.data
+      return find_for_insert(node.left, value) unless node.left.nil?
+    else
+      return find_for_insert(node.right, value) unless node.right.nil?
+    end
+    node
   end
 
   def find(node, value, parent = nil)
@@ -74,7 +80,6 @@ class Tree
     else
       update_parent_node_leaf_conditionally(found_parent, nil, value)
     end
-    pretty_print(@root)
   end
 
   def update_parent_node_leaf_conditionally(parent, new_value, value)
@@ -164,5 +169,34 @@ class Tree
     left += 1 unless left.nil?
     right += 1 unless right.nil?
     [left, right].compact.max
+  end
+
+  def balanced?
+    balanced_walk(@root)
+  end
+
+  def balanced_walk(node)
+    return 0 if node.nil?
+    return 0 if node.left.nil? && node.right.nil?
+
+    if node.right.nil?
+      total = 1 + balanced_walk(node.left)
+      return false if total >= 2
+
+      return total
+
+    elsif node.left.nil?
+      total = 1 + balanced_walk(node.right)
+      return false if total >= 2
+
+      return total
+
+    else
+      l = balanced_walk(node.left)
+      r = balanced_walk(node.right)
+
+      return false if l == false || r == false
+    end
+    true
   end
 end
