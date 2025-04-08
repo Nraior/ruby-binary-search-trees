@@ -17,6 +17,13 @@ tree.depth(23)
 tree.pretty_print
 
 tree.insert(9)
+tree.insert(9)
+tree.insert(6325)
+tree.insert(6321)
 
 tree.pretty_print
 p tree.balanced?
+
+tree.rebalance
+p tree.balanced?
+p tree.pretty_print

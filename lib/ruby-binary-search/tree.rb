@@ -196,4 +196,15 @@ class Tree
     end
     true
   end
+
+  def rebalance
+    all_entries = []
+    level_order do |element|
+      all_entries.push(element)
+    end
+
+    all_entries.sort!
+
+    initialize(all_entries)
+  end
 end
