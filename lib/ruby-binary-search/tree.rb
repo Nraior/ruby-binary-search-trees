@@ -57,6 +57,8 @@ class Tree
   def delete(value, start_node = @root)
     found = find(start_node, value)
     found_node = found[:node]
+    return nil if found_node.nil?
+
     found_parent = found[:parent]
 
     if found_node.left_child_exist? && found_node.right_child_exist?
@@ -181,12 +183,12 @@ class Tree
     l = balanced_walk(node.left)
     r = balanced_walk(node.right)
 
-    if node.right.nil?
+    if node.right.nil? && l.is_a?(Integer)
       return false if 1 + l >= 2
 
       return 1 + l
 
-    elsif node.left.nil?
+    elsif node.left.nil? && r.is_a?(Integer)
       return false if 1 + r >= 2
 
       return 1 + r
