@@ -1,29 +1,44 @@
 require_relative 'ruby-binary-search/tree'
 
-data = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
+data = (Array.new(15) { rand(1..100) })
 
 tree = Tree.new(data)
+p "Balanced: #{tree.balanced?}"
 
-# tree.insert(15)
-# tree.insert(16)
-# tree.insert(14)
+level_order_elements = []
+tree.level_order { |el| level_order_elements.push(el) }
+p "Level order: #{level_order_elements}"
 
-tree.delete(67)
-tree.delete(8)
+pre_order_elements = []
+tree.preorder { |el| pre_order_elements.push(el) }
+p "Pre order: #{pre_order_elements}"
 
-tree.depth(23)
+post_order_elements = []
+tree.postorder { |el| post_order_elements.push(el) }
+p "Post order: #{post_order_elements}"
 
-# tree.insert(8)
-tree.pretty_print
+in_order_elements = []
+tree.inorder { |el| in_order_elements.push(el) }
+p "In order: #{in_order_elements}"
 
-tree.insert(9)
-tree.insert(9)
-tree.insert(6325)
-tree.insert(6321)
-
-tree.pretty_print
-p tree.balanced?
-
+tree.insert(101)
+tree.insert(102)
+p "Balanced: #{tree.balanced?}"
 tree.rebalance
-p tree.balanced?
-p tree.pretty_print
+p "Balanced: #{tree.balanced?}"
+
+level_order_elements = []
+tree.level_order { |el| level_order_elements.push(el) }
+p "Level order: #{level_order_elements}"
+
+pre_order_elements = []
+tree.preorder { |el| pre_order_elements.push(el) }
+p "Pre order: #{pre_order_elements}"
+
+post_order_elements = []
+tree.postorder { |el| post_order_elements.push(el) }
+p "Post order: #{post_order_elements}"
+
+in_order_elements = []
+tree.inorder { |el| in_order_elements.push(el) }
+p "In order: #{in_order_elements}"
